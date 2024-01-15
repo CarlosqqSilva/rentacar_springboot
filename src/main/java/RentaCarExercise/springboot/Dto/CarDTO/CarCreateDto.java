@@ -10,6 +10,7 @@ public record CarCreateDto(
         @NotBlank(message = "Must have a plate")
         String plate,
         int km,
-        int horsePower
+        int horsePower,
+        int pricePerHour
 ) {
 }

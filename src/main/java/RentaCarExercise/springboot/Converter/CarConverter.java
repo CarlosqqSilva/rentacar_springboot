@@ -28,7 +28,8 @@ public class CarConverter {
                 carDto.brand(),
                 carDto.plate(),
                 carDto.horsePower(),
-                carDto.km()
+                carDto.km(),
+                carDto.pricePerHour()
         );
     }
 }
