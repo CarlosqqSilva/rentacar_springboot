@@ -1,6 +1,7 @@
 package RentaCarExercise.springboot.controllers;
 
 import RentaCarExercise.springboot.dto.clientDTO.ClientCreateDto;
+import RentaCarExercise.springboot.dto.clientDTO.ClientGetDto;
 import RentaCarExercise.springboot.dto.clientDTO.ClientUpdateDto;
 import RentaCarExercise.springboot.expections.clientExpections.CreateClientException;
 import RentaCarExercise.springboot.expections.clientExpections.DeleteClientException;
@@ -28,7 +29,7 @@ public class ClientController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<ClientCreateDto>> getClients() {
+    public ResponseEntity<List<ClientGetDto>> getClients() {
 
         return ResponseEntity.ok(clientsService.getClients());
     }
@@ -40,13 +41,13 @@ public class ClientController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ClientUpdateDto> updateClient(@PathVariable Long id, @Valid @RequestBody ClientUpdateDto clientDto, BindingResult bindingResult) throws UpdateClientException {
+    public ResponseEntity<String> updateClient(@PathVariable Long id, @Valid @RequestBody ClientUpdateDto clientDto, BindingResult bindingResult) throws UpdateClientException {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        ClientUpdateDto savedClient = clientsService.updateClient(id, clientDto);
-        return new ResponseEntity<>(savedClient, HttpStatus.OK);
+        clientsService.updateClient(id, clientDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

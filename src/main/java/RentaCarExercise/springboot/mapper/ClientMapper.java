@@ -1,6 +1,7 @@
 package RentaCarExercise.springboot.mapper;
 
 import RentaCarExercise.springboot.dto.clientDTO.ClientCreateDto;
+import RentaCarExercise.springboot.dto.clientDTO.ClientGetDto;
 import RentaCarExercise.springboot.dto.clientDTO.ClientUpdateDto;
 import RentaCarExercise.springboot.model.Client;
 import org.mapstruct.Mapper;
@@ -19,4 +20,6 @@ public interface ClientMapper {
     List<Client> clientDtoToModelClient(List<ClientCreateDto> clientCreateDto);
 
     ClientUpdateDto modelClientUpdateToDto(Client clients);
+
+    List<ClientGetDto> modelClientToGetClientDto(List<Client> client);
 }

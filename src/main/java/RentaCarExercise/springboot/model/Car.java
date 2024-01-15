@@ -2,15 +2,17 @@ package RentaCarExercise.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Cars")
 public class Car {
     @Id
@@ -35,9 +37,6 @@ public class Car {
     @OneToMany(mappedBy = "car")
     @JsonBackReference
     private List<Rental> rental = new ArrayList<>();
-
-    public Car() {
-    }
 
     public Car(String brand, String plate, int km, int horsePower, int pricePerDay) {
         this.brand = brand;

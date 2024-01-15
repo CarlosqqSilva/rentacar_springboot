@@ -1,6 +1,7 @@
 package RentaCarExercise.springboot.services.clientService;
 
 import RentaCarExercise.springboot.dto.clientDTO.ClientCreateDto;
+import RentaCarExercise.springboot.dto.clientDTO.ClientGetDto;
 import RentaCarExercise.springboot.dto.clientDTO.ClientUpdateDto;
 import RentaCarExercise.springboot.expections.clientExpections.CreateClientException;
 import RentaCarExercise.springboot.expections.clientExpections.DeleteClientException;
@@ -13,7 +14,6 @@ import RentaCarExercise.springboot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,10 +24,9 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientMapper clientMapper;
 
-    public List<ClientCreateDto> getClients() {
-        List<Client> client = new ArrayList<>();
-        client.addAll(clientsRepository.findAll());
-        return clientMapper.modelClientToClientDto(client);
+    @Override
+    public List<ClientGetDto> getClients() {
+        return clientMapper.modelClientToGetClientDto(clientsRepository.findAll());
     }
 
     @Override
@@ -36,25 +35,22 @@ public class ClientServiceImpl implements ClientService {
         if (clientOptional.isPresent()) {
             throw new CreateClientException(Messages.EMAIL_IN_USE);
         }
+        if (clientsRepository.findByNif(client.nif()).isPresent()) {
+            throw new CreateClientException(Messages.EMAIL_IN_USE); //todo have to change messsage
+        }
         Client newClient = clientMapper.clientDtoToModelClient(client);
         clientsRepository.save(newClient);
     }
 
     @Override
-    public ClientUpdateDto updateClient(Long id, ClientUpdateDto clientDto) throws UpdateClientException {
-        Client existingClient = clientsRepository.getReferenceById(id);
-        if (existingClient == null) {
-            throw new UpdateClientException(Messages.USER_NOT_FOUND);
+    public void updateClient(Long id, ClientUpdateDto clientDto) throws UpdateClientException {
+        Client clientToUpdate = clientsRepository.findById(id).orElseThrow(() -> new UpdateClientException(Messages.ID_DOES_NOT_EXIST));
+        if (clientsRepository.findByEmail(clientDto.email()).isEmpty()) { //todo FIX THE EMPTY TO PRESENT
+            throw new UpdateClientException(Messages.EMAIL_IN_USE);
         }
-        if (existingClient.getName().isEmpty()) {
-            existingClient.setName(clientDto.name());
-        }
-        if (existingClient.getEmail().isEmpty()) {
-            existingClient.setEmail(clientDto.email());
-        }
-
-        Client updateClient = clientsRepository.save(existingClient);
-        return clientMapper.modelClientUpdateToDto(updateClient);
+        clientToUpdate.setEmail(clientDto.email());
+        clientToUpdate.setName(clientDto.name());
+        clientsRepository.save(clientToUpdate);
     }
 
     @Override
