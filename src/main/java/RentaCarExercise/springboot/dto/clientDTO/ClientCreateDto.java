@@ -4,11 +4,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
-import lombok.Builder;
 
 import java.time.LocalDate;
 
-@Builder
 public record ClientCreateDto(
 
         @NotBlank(message = "Must have a name")

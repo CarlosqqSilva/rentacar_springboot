@@ -1,9 +1,7 @@
 package RentaCarExercise.springboot.dto.carDTO;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
 
-@Builder
 public record CarCreateDto(
         @NotBlank(message = "Must have a brand")
         String brand,
