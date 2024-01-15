@@ -13,24 +13,24 @@ public class LoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Before("execution(* RentaCarExercise.springboot.Services.CarService.CarServiceImpl.addCar(..))")
+    @Before("execution(* RentaCarExercise.springboot.services.carService.CarServiceImpl.addCar(..))")
     public void logBeforeServiceToCreate(JoinPoint joinPoint) {
         logger.info("Before " + joinPoint.getSignature().getName() + " method call");
     }
 
-    @AfterReturning(pointcut = "execution(* RentaCarExercise.springboot.Service.*.*(..))", returning = "result")
+    @AfterReturning(pointcut = "execution(* RentaCarExercise.springboot.services.*.*(..))", returning = "result")
     public void logAfterService(JoinPoint joinPoint, Object result) {
         logger.info("After " + joinPoint.getSignature().getName() + " method call");
         logger.info("Response " + result);
     }
 
-    @AfterThrowing(pointcut = "execution(* RentaCarExercise.springboot.Service.*.*(..))", throwing = "exception")
+    @AfterThrowing(pointcut = "execution(* RentaCarExercise.springboot.services.*.*(..))", throwing = "exception")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) {
         logger.error("Exception in " + joinPoint.getSignature().getName() + " method call");
         logger.error("Response " + exception);
     }
 
-    @Around("execution(* RentaCarExercise.springboot.Services.CarService.CarService.GetCars(..))")
+    @Around("execution(* RentaCarExercise.springboot.services.carService.CarServiceImpl.getCars(..))")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         logger.info("Before " + joinPoint.getSignature().getName() + " method call");

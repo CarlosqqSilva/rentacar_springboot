@@ -6,7 +6,7 @@ import RentaCarExercise.springboot.expections.clientExpections.CreateClientExcep
 import RentaCarExercise.springboot.expections.clientExpections.DeleteClientException;
 import RentaCarExercise.springboot.expections.clientExpections.UpdateClientException;
 import RentaCarExercise.springboot.model.Client;
-import RentaCarExercise.springboot.services.clientService.ClientService;
+import RentaCarExercise.springboot.services.clientService.ClientServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +20,10 @@ import java.util.List;
 @RequestMapping("api/v1/clients")
 public class ClientController {
 
-    private final ClientService clientsService;
+    private final ClientServiceImpl clientsService;
 
     @Autowired
-    public ClientController(ClientService clientsService) {
+    public ClientController(ClientServiceImpl clientsService) {
         this.clientsService = clientsService;
     }
 
