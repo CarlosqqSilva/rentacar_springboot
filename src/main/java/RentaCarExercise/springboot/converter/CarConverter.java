@@ -1,7 +1,7 @@
 package RentaCarExercise.springboot.converter;
 
 import RentaCarExercise.springboot.dto.carDTO.CarCreateDto;
-import RentaCarExercise.springboot.dto.carDTO.CarUpdateDto;
+import RentaCarExercise.springboot.dto.carDTO.CarUpdateKmDto;
 import RentaCarExercise.springboot.model.Car;
 
 public class CarConverter {
@@ -16,8 +16,8 @@ public class CarConverter {
 
     }
 
-    public static CarUpdateDto fromModelCarUpdateToDto(Car car) {
-        return CarUpdateDto.builder()
+    public static CarUpdateKmDto fromModelCarUpdateToDto(Car car) {
+        return CarUpdateKmDto.builder()
                 .km(car.getKm())
                 .build();
 
@@ -29,7 +29,7 @@ public class CarConverter {
                 carDto.plate(),
                 carDto.horsePower(),
                 carDto.km(),
-                carDto.pricePerHour()
+                carDto.pricePerDay()
         );
     }
 }

@@ -1,5 +1,6 @@
 package RentaCarExercise.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,9 +20,11 @@ public class Rental {
     private LocalDate endOfRental;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Client client;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Car car;
 
     public Rental() {

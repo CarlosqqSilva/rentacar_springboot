@@ -2,7 +2,8 @@ package RentaCarExercise.springboot.services.carService;
 
 import RentaCarExercise.springboot.converter.CarConverter;
 import RentaCarExercise.springboot.dto.carDTO.CarCreateDto;
-import RentaCarExercise.springboot.dto.carDTO.CarUpdateDto;
+import RentaCarExercise.springboot.dto.carDTO.CarUpdateKmDto;
+import RentaCarExercise.springboot.dto.carDTO.CarUpdatePriceDto;
 import RentaCarExercise.springboot.expections.carExceptions.AddCarException;
 import RentaCarExercise.springboot.expections.carExceptions.DeleteCarException;
 import RentaCarExercise.springboot.expections.carExceptions.GetByIdException;
@@ -45,7 +46,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarUpdateDto updateCar(Long id, CarUpdateDto carDto) throws UpdateCarException {
+    public CarUpdateKmDto updateCar(Long id, CarUpdateKmDto carDto) throws UpdateCarException {
         Car existingCar = carRepository.getReferenceById(id);
         if (existingCar == null) {
             throw new UpdateCarException(Messages.CAR_ID_DOES_NOT_EXIST);
@@ -72,6 +73,12 @@ public class CarServiceImpl implements CarService {
         }
 
         return carOptional.get();
+    }
+
+    public void updatePrice(Long id, CarUpdatePriceDto car) throws UpdateCarException {
+        Car carPriceChange = carRepository.findById(id).orElseThrow(() -> new UpdateCarException(Messages.CAR_ID_DOES_NOT_EXIST));
+        carPriceChange.setPricePerDay(car.pricePerDay());
+        carRepository.save(carPriceChange);
     }
 
 }

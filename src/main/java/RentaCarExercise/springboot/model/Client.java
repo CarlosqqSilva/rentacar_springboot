@@ -1,5 +1,6 @@
 package RentaCarExercise.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -32,6 +33,7 @@ public class Client {
     private LocalDate dateOfBirth;
 
     @OneToMany(mappedBy = "client")
+    @JsonBackReference
     private List<Rental> rental = new ArrayList<>();
 
     public Client() {

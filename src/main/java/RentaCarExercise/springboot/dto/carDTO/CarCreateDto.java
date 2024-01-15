@@ -11,6 +11,6 @@ public record CarCreateDto(
         String plate,
         int km,
         int horsePower,
-        int pricePerHour
+        int pricePerDay
 ) {
 }

@@ -3,6 +3,6 @@ package RentaCarExercise.springboot.dto.carDTO;
 import lombok.Builder;
 
 @Builder
-public record CarUpdateDto(
+public record CarUpdateKmDto(
         int km) {
 }

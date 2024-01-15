@@ -16,7 +16,8 @@ public interface RentalMapper {
 
     RentalCreateDto EntityRentalToRentalDto(Rental rental);
 
+    List<Rental> rentalDtoToEntityRental(List<RentalCreateDto> rentalCreateDto);
+
     List<RentalCreateDto> EntityRentalToRentalDto(List<Rental> rental);
 
-    List<Rental> rentalDtoToEntityRental(List<RentalCreateDto> rentalCreateDto);
 }

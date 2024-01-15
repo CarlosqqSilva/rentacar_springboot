@@ -1,5 +1,6 @@
 package RentaCarExercise.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Setter;
@@ -29,20 +30,21 @@ public class Car {
     private int horsePower;
 
     @Column(nullable = false)
-    private int pricePerHour;
+    private int pricePerDay;
 
     @OneToMany(mappedBy = "car")
+    @JsonBackReference
     private List<Rental> rental = new ArrayList<>();
 
     public Car() {
     }
 
-    public Car(String brand, String plate, int km, int horsePower, int pricePerHour) {
+    public Car(String brand, String plate, int km, int horsePower, int pricePerDay) {
         this.brand = brand;
         this.plate = plate;
         this.km = km;
         this.horsePower = horsePower;
-        this.pricePerHour = pricePerHour;
+        this.pricePerDay = pricePerDay;
 
     }
 }

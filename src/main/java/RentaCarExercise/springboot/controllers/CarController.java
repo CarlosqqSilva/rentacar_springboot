@@ -1,7 +1,8 @@
 package RentaCarExercise.springboot.controllers;
 
 import RentaCarExercise.springboot.dto.carDTO.CarCreateDto;
-import RentaCarExercise.springboot.dto.carDTO.CarUpdateDto;
+import RentaCarExercise.springboot.dto.carDTO.CarUpdateKmDto;
+import RentaCarExercise.springboot.dto.carDTO.CarUpdatePriceDto;
 import RentaCarExercise.springboot.expections.carExceptions.AddCarException;
 import RentaCarExercise.springboot.expections.carExceptions.DeleteCarException;
 import RentaCarExercise.springboot.expections.carExceptions.UpdateCarException;
@@ -39,17 +40,23 @@ public class CarController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<CarUpdateDto> updateCar(@PathVariable Long id, @Valid @RequestBody CarUpdateDto carDto, BindingResult bindingResult) throws UpdateCarException {
+    public ResponseEntity<CarUpdateKmDto> updateCar(@PathVariable Long id, @Valid @RequestBody CarUpdateKmDto carDto, BindingResult bindingResult) throws UpdateCarException {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        CarUpdateDto savedCar = carsService.updateCar(id, carDto);
+        CarUpdateKmDto savedCar = carsService.updateCar(id, carDto);
         return new ResponseEntity<>(savedCar, HttpStatus.OK);
     }
 
+    @PatchMapping("/price/{id}")
+    public ResponseEntity<String> updatePrice(@Valid @RequestBody CarUpdatePriceDto car, @PathVariable Long id) throws UpdateCarException {
+        carsService.updatePrice(id, car);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCar(@PathVariable Long id) throws DeleteCarException {
+    public ResponseEntity<Void> deleteCar(@PathVariable Long id) throws DeleteCarException, DeleteCarException {
         carsService.deleteCar(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

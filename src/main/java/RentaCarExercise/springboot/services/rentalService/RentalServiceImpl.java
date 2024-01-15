@@ -2,14 +2,14 @@ package RentaCarExercise.springboot.services.rentalService;
 
 import RentaCarExercise.springboot.dto.rentalDTO.RentalCreateDto;
 import RentaCarExercise.springboot.dto.rentalDTO.RentalPostDto;
-import RentaCarExercise.springboot.model.Car;
-import RentaCarExercise.springboot.model.Client;
-import RentaCarExercise.springboot.model.Rental;
 import RentaCarExercise.springboot.expections.carExceptions.GetByIdException;
 import RentaCarExercise.springboot.expections.clientExpections.GetClientByIdException;
 import RentaCarExercise.springboot.expections.rentalExpections.DeleteRentalException;
 import RentaCarExercise.springboot.expections.rentalExpections.UpdateRentalException;
 import RentaCarExercise.springboot.mapper.RentalMapper;
+import RentaCarExercise.springboot.model.Car;
+import RentaCarExercise.springboot.model.Client;
+import RentaCarExercise.springboot.model.Rental;
 import RentaCarExercise.springboot.repositories.RentalRepository;
 import RentaCarExercise.springboot.services.carService.CarService;
 import RentaCarExercise.springboot.services.clientService.ClientService;
