@@ -2,11 +2,11 @@ package RentaCarExercise.springboot.controllers;
 
 import RentaCarExercise.springboot.dto.clientDTO.ClientCreateDto;
 import RentaCarExercise.springboot.dto.clientDTO.ClientUpdateDto;
-import RentaCarExercise.springboot.model.Client;
 import RentaCarExercise.springboot.expections.clientExpections.CreateClientException;
 import RentaCarExercise.springboot.expections.clientExpections.DeleteClientException;
 import RentaCarExercise.springboot.expections.clientExpections.UpdateClientException;
-import RentaCarExercise.springboot.services.clientService.ClientServiceImpl;
+import RentaCarExercise.springboot.model.Client;
+import RentaCarExercise.springboot.services.clientService.ClientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +20,10 @@ import java.util.List;
 @RequestMapping("api/v1/clients")
 public class ClientController {
 
-    private final ClientServiceImpl clientsService;
+    private final ClientService clientsService;
 
     @Autowired
-    public ClientController(ClientServiceImpl clientsService) {
+    public ClientController(ClientService clientsService) {
         this.clientsService = clientsService;
     }
 
