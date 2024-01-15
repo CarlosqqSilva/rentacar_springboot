@@ -1,6 +1,5 @@
 package RentaCarExercise.springboot.services.carService;
 
-import RentaCarExercise.springboot.converter.CarConverter;
 import RentaCarExercise.springboot.dto.carDTO.CarCreateDto;
 import RentaCarExercise.springboot.dto.carDTO.CarUpdateKmDto;
 import RentaCarExercise.springboot.dto.carDTO.CarUpdatePriceDto;
@@ -12,27 +11,24 @@ import RentaCarExercise.springboot.mapper.CarMapper;
 import RentaCarExercise.springboot.model.Car;
 import RentaCarExercise.springboot.repositories.CarRepository;
 import RentaCarExercise.springboot.util.Messages;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static RentaCarExercise.springboot.converter.CarConverter.fromDtoToModelCar;
-
 @Service
 public class CarServiceImpl implements CarService {
-
-    private final CarRepository carRepository;
-
-    public CarServiceImpl(CarRepository carRepository) {
-        this.carRepository = carRepository;
-    }
+    @Autowired
+    private CarRepository carRepository;
+    @Autowired
+    private CarMapper carMapper;
 
     public List<CarCreateDto> getCars() {
         List<Car> cars = new ArrayList<>();
         cars.addAll(carRepository.findAll());
-        return CarMapper.INSTANCE.EntityCarToCarDto(cars);
+        return carMapper.modelCarToCarDto(cars);
     }
 
     @Override
@@ -41,7 +37,7 @@ public class CarServiceImpl implements CarService {
         if (carOptional.isPresent()) {
             throw new AddCarException(Messages.PLATE_DOES_NOT_EXIST);
         }
-        Car newCar = fromDtoToModelCar(car);
+        Car newCar = carMapper.carDtoToModelCar(car);
         carRepository.save(newCar);
     }
 
@@ -54,7 +50,7 @@ public class CarServiceImpl implements CarService {
         existingCar.setKm(carDto.km());
 
         Car updateCar = carRepository.save(existingCar);
-        return CarConverter.fromModelCarUpdateToDto(updateCar);
+        return carMapper.modelCarUpdateKmToDto(updateCar);
     }
 
     @Override
@@ -75,10 +71,11 @@ public class CarServiceImpl implements CarService {
         return carOptional.get();
     }
 
-    public void updatePrice(Long id, CarUpdatePriceDto car) throws UpdateCarException {
+    public CarUpdatePriceDto updatePrice(Long id, CarUpdatePriceDto car) throws UpdateCarException {
         Car carPriceChange = carRepository.findById(id).orElseThrow(() -> new UpdateCarException(Messages.CAR_ID_DOES_NOT_EXIST));
         carPriceChange.setPricePerDay(car.pricePerDay());
         carRepository.save(carPriceChange);
+        return carMapper.modelCarUpdatePriceDto(carPriceChange);
     }
 
 }

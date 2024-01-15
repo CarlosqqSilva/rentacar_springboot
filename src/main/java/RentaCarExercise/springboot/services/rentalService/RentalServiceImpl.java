@@ -27,6 +27,8 @@ public class RentalServiceImpl implements RentalService {
     private final RentalRepository rentalRepository;
     private final ClientService clientService;
     private final CarService carService;
+    @Autowired
+    private RentalMapper rentalMapper;
 
     @Autowired
     public RentalServiceImpl(RentalRepository rentalsRepository, ClientService clientService, CarService carService) {
@@ -39,7 +41,7 @@ public class RentalServiceImpl implements RentalService {
     public List<RentalCreateDto> getRentals() {
         List<Rental> rentals = new ArrayList<>();
         rentals.addAll(rentalRepository.findAll());
-        return RentalMapper.INSTANCE.EntityRentalToRentalDto(rentals);
+        return rentalMapper.modelRentalToRentalDto(rentals);
     }
 
     @Override
@@ -51,12 +53,12 @@ public class RentalServiceImpl implements RentalService {
         rentalRepository.save(newRental);
     }
 
-    public void deleteRental(RentalCreateDto rentalId) throws DeleteRentalException {
-        Rental rentalToDelete = rentalRepository.getReferenceById(rentalId.id());
-        if (rentalToDelete == null) {
+    public void deleteRental(long id) throws DeleteRentalException {
+        boolean exists = rentalRepository.existsById(id);
+        if (!exists) {
             throw new DeleteRentalException(Messages.RENTAL_ID_DOES_NOT_EXIST);
         }
-        rentalRepository.delete(rentalToDelete);
+        rentalRepository.deleteById(id);
     }
 
     public void updateRental(long id, RentalCreateDto rentalCreateDto) throws UpdateRentalException {

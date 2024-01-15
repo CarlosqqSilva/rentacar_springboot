@@ -3,21 +3,18 @@ package RentaCarExercise.springboot.mapper;
 import RentaCarExercise.springboot.dto.rentalDTO.RentalCreateDto;
 import RentaCarExercise.springboot.model.Rental;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface RentalMapper {
 
-    RentalMapper INSTANCE = Mappers.getMapper(RentalMapper.class);
+    Rental rentalDtoToModelRental(RentalCreateDto rentalCreateDto);
 
-    Rental rentalDtoToEntityRental(RentalCreateDto rentalCreateDto);
+    RentalCreateDto modelRentalToRentalDto(Rental rental);
 
-    RentalCreateDto EntityRentalToRentalDto(Rental rental);
+    List<Rental> rentalDtoToModelRental(List<RentalCreateDto> rentalCreateDto);
 
-    List<Rental> rentalDtoToEntityRental(List<RentalCreateDto> rentalCreateDto);
-
-    List<RentalCreateDto> EntityRentalToRentalDto(List<Rental> rental);
+    List<RentalCreateDto> modelRentalToRentalDto(List<Rental> rental);
 
 }

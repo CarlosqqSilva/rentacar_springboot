@@ -54,8 +54,8 @@ public class RentalController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<RentalCreateDto> deleteRental(@PathVariable RentalCreateDto rentalId) throws DeleteRentalException {
-        rentalsService.deleteRental(rentalId);
+    public ResponseEntity<Rental> deleteRental(@PathVariable long id) throws DeleteRentalException {
+        rentalsService.deleteRental(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

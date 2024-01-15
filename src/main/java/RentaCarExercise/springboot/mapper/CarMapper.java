@@ -1,22 +1,25 @@
 package RentaCarExercise.springboot.mapper;
 
 import RentaCarExercise.springboot.dto.carDTO.CarCreateDto;
+import RentaCarExercise.springboot.dto.carDTO.CarUpdateKmDto;
+import RentaCarExercise.springboot.dto.carDTO.CarUpdatePriceDto;
 import RentaCarExercise.springboot.model.Car;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CarMapper {
 
-    CarMapper INSTANCE = Mappers.getMapper(CarMapper.class);
+    Car carDtoToModelCar(CarCreateDto carCreateDto);
 
-    Car carDtoToEntityCar(CarCreateDto carCreateDto);
+    CarCreateDto modelCarToCarDto(Car car);
 
-    CarCreateDto EntityCarToCarDto(Car car);
+    List<CarCreateDto> modelCarToCarDto(List<Car> car);
 
-    List<CarCreateDto> EntityCarToCarDto(List<Car> car);
+    List<Car> carDtoToModelCar(List<CarCreateDto> carCreateDto);
 
-    List<Car> carDtoToEntityCar(List<CarCreateDto> carCreateDto);
+    CarUpdateKmDto modelCarUpdateKmToDto(Car car);
+
+    CarUpdatePriceDto modelCarUpdatePriceDto(Car car);
 }

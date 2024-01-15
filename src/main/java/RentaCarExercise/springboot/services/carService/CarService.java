@@ -22,5 +22,5 @@ public interface CarService {
 
     Car getById(Long id) throws GetByIdException;
 
-    void updatePrice(Long id, CarUpdatePriceDto car) throws UpdateCarException;
+    CarUpdatePriceDto updatePrice(Long id, CarUpdatePriceDto car) throws UpdateCarException;
 }

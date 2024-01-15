@@ -1,22 +1,22 @@
 package RentaCarExercise.springboot.mapper;
 
 import RentaCarExercise.springboot.dto.clientDTO.ClientCreateDto;
+import RentaCarExercise.springboot.dto.clientDTO.ClientUpdateDto;
 import RentaCarExercise.springboot.model.Client;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
 
-    ClientMapper INSTANCE = Mappers.getMapper(ClientMapper.class);
+    Client clientDtoToModelClient(ClientCreateDto clientCreateDto);
 
-    Client clientDtoToEntityClient(ClientCreateDto clientCreateDto);
+    ClientCreateDto modelClientToClientDto(Client client);
 
-    ClientCreateDto EntityClientToClientDto(Client client);
+    List<ClientCreateDto> modelClientToClientDto(List<Client> client);
 
-    List<ClientCreateDto> EntityClientToClientDto(List<Client> client);
+    List<Client> clientDtoToModelClient(List<ClientCreateDto> clientCreateDto);
 
-    List<Client> clientDtoToEntityClient(List<ClientCreateDto> clientCreateDto);
+    ClientUpdateDto modelClientUpdateToDto(Client clients);
 }

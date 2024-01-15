@@ -14,7 +14,7 @@ public interface RentalService {
 
     void addNewRental(RentalPostDto rental) throws GetByIdException, GetClientByIdException;
 
-    void deleteRental(RentalCreateDto rentalId) throws DeleteRentalException;
+    void deleteRental(long id) throws DeleteRentalException;
 
     void updateRental(long id, RentalCreateDto rentalCreateDto) throws UpdateRentalException;
 }
