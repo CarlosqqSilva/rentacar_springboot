@@ -24,8 +24,20 @@ public class LoggingAspect {
         logger.info("Response " + result);
     }
 
-    @AfterThrowing(pointcut = "execution(* RentaCarExercise.springboot.services.*.*(..))", throwing = "exception")
-    public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) {
+    @AfterThrowing(pointcut = "execution(* RentaCarExercise.springboot.services.carExceptions.*.*(..))", throwing = "exception")
+    public void logAfterThrowingCarException(JoinPoint joinPoint, Throwable exception) {
+        logger.error("Exception in " + joinPoint.getSignature().getName() + " method call");
+        logger.error("Response " + exception);
+    }
+
+    @AfterThrowing(pointcut = "execution(* RentaCarExercise.springboot.services.clientExceptions.*.*(..))", throwing = "exception")
+    public void logAfterThrowingClientException(JoinPoint joinPoint, Throwable exception) {
+        logger.error("Exception in " + joinPoint.getSignature().getName() + " method call");
+        logger.error("Response " + exception);
+    }
+
+    @AfterThrowing(pointcut = "execution(* RentaCarExercise.springboot.services.rentalExceptions.*.*(..))", throwing = "exception")
+    public void logAfterThrowingRentalException(JoinPoint joinPoint, Throwable exception) {
         logger.error("Exception in " + joinPoint.getSignature().getName() + " method call");
         logger.error("Response " + exception);
     }
