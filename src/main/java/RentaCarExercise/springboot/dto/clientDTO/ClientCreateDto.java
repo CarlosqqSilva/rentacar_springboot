@@ -16,7 +16,6 @@ public record ClientCreateDto(
         String email,
         @Past(message = "Insert a valid date of birth")
         LocalDate dateOfBirth,
-        Long id,
         int drivingLicense,
         int nif
 ) {

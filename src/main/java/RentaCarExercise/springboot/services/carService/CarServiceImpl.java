@@ -32,13 +32,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void addCar(CarCreateDto car) throws AddCarException {
+    public Car addCar(CarCreateDto car) throws AddCarException {
         Optional<Car> carOptional = carRepository.findByPlate(car.plate());
         if (carOptional.isPresent()) {
             throw new AddCarException(Messages.PLATE_DOES_NOT_EXIST);
         }
         Car newCar = carMapper.carDtoToModelCar(car);
-        carRepository.save(newCar);
+        return carRepository.save(newCar);
     }
 
     @Override

@@ -23,13 +23,14 @@ public class Rental {
 
     private LocalDate endOfRental;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JsonManagedReference
     private Client client;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JsonManagedReference
     private Car car;
+
 
     public Rental(Client client, Car car, LocalDate endOfRental) {
         this.client = client;
@@ -37,5 +38,4 @@ public class Rental {
         this.endOfRental = endOfRental;
         this.dateOfRental = LocalDate.now();
     }
-
 }

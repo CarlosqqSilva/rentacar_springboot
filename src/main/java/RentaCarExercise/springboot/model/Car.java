@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -34,7 +35,7 @@ public class Car {
     @Column(nullable = false)
     private int pricePerDay;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Rental> rental = new ArrayList<>();
 

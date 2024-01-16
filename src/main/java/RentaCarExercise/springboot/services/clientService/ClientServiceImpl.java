@@ -30,7 +30,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void createClient(ClientCreateDto client) throws CreateClientException {
+    public Client createClient(ClientCreateDto client) throws CreateClientException {
         Optional<Client> clientOptional = clientsRepository.findClientByEmail(client.email());
         if (clientOptional.isPresent()) {
             throw new CreateClientException(Messages.EMAIL_IN_USE);
@@ -39,7 +39,7 @@ public class ClientServiceImpl implements ClientService {
             throw new CreateClientException(Messages.EMAIL_IN_USE); //todo have to change messsage
         }
         Client newClient = clientMapper.clientDtoToModelClient(client);
-        clientsRepository.save(newClient);
+        return clientsRepository.save(newClient);
     }
 
     @Override

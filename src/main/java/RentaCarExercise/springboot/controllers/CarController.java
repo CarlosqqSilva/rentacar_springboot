@@ -6,7 +6,7 @@ import RentaCarExercise.springboot.dto.carDTO.CarUpdatePriceDto;
 import RentaCarExercise.springboot.expections.carExceptions.AddCarException;
 import RentaCarExercise.springboot.expections.carExceptions.DeleteCarException;
 import RentaCarExercise.springboot.expections.carExceptions.UpdateCarException;
-import RentaCarExercise.springboot.model.Client;
+import RentaCarExercise.springboot.model.Car;
 import RentaCarExercise.springboot.services.carService.CarServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +34,9 @@ public class CarController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Client> addCar(@Valid @RequestBody CarCreateDto car) throws AddCarException {
-        carsService.addCar(car);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Car> addCar(@Valid @RequestBody CarCreateDto car) throws AddCarException {
+        Car car1 = carsService.addCar(car);
+        return new ResponseEntity<>(car1, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")

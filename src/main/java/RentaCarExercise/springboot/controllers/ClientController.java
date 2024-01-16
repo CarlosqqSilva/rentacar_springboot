@@ -36,8 +36,8 @@ public class ClientController {
 
     @PostMapping("/")
     public ResponseEntity<Client> createClient(@RequestBody ClientCreateDto client) throws CreateClientException {
-        clientsService.createClient(client);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Client client1 = clientsService.createClient(client);
+        return new ResponseEntity<>(client1, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")

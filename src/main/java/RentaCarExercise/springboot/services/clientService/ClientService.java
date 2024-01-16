@@ -14,7 +14,7 @@ import java.util.List;
 public interface ClientService {
     List<ClientGetDto> getClients();
 
-    void createClient(ClientCreateDto client) throws CreateClientException;
+    Client createClient(ClientCreateDto client) throws CreateClientException;
 
     void updateClient(Long id, ClientUpdateDto clientDto) throws UpdateClientException;
 

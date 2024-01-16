@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -36,17 +37,8 @@ public class Client {
     @Column(nullable = false)
     private LocalDate dateOfBirth;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Rental> rental = new ArrayList<>();
-
-    public Client(String name, String email, int drivingLicense, LocalDate dateOfBirth, int nif) {
-        this.name = name;
-        this.email = email;
-        this.drivingLicense = drivingLicense;
-        this.dateOfBirth = dateOfBirth;
-        this.nif = nif;
-        this.id = getId();
-    }
 
 }

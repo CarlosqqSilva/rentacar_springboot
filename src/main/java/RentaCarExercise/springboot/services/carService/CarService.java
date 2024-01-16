@@ -14,7 +14,7 @@ import java.util.List;
 public interface CarService {
     List<CarCreateDto> getCars();
 
-    void addCar(CarCreateDto car) throws AddCarException;
+    Car addCar(CarCreateDto car) throws AddCarException;
 
     CarUpdateKmDto updateCar(Long id, CarUpdateKmDto carDto) throws UpdateCarException;
 
