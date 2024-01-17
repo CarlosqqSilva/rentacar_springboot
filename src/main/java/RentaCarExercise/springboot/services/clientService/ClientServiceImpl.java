@@ -11,6 +11,7 @@ import RentaCarExercise.springboot.mapper.ClientMapper;
 import RentaCarExercise.springboot.model.Client;
 import RentaCarExercise.springboot.repositories.ClientRepository;
 import RentaCarExercise.springboot.util.Messages;
+import RentaCarExercise.springboot.util.MessagesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class ClientServiceImpl implements ClientService {
     public Client createClient(ClientCreateDto client) throws CreateClientException {
         Optional<Client> clientOptional = clientRepository.findClientByEmail(client.email());
         if (clientOptional.isPresent()) {
-            throw new CreateClientException(Messages.EMAIL_IN_USE);
+            throw new CreateClientException(MessagesEnum.EMAIL_IN_USE.getMessage());
         }
         if (clientRepository.findByNif(client.nif()).isPresent()) {
             throw new CreateClientException(Messages.EMAIL_IN_USE); //todo have to change messsage
