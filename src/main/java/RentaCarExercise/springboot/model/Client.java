@@ -1,14 +1,9 @@
 package RentaCarExercise.springboot.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Data
@@ -34,11 +29,10 @@ public class Client {
     @Column(nullable = false, unique = true)
     private int nif;
 
-    @Column(nullable = false)
-    private LocalDate dateOfBirth;
-
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<Rental> rental = new ArrayList<>();
-
+    public Client(String name, String email, int drivingLicense, int nif) {
+        this.name = name;
+        this.email = email;
+        this.drivingLicense = drivingLicense;
+        this.nif = nif;
+    }
 }

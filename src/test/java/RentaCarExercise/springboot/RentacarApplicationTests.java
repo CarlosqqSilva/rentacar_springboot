@@ -16,9 +16,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.Assert;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -63,26 +64,25 @@ class RentacarApplicationTests {
     public void testCreateClientReturnCreateAndGetIdEqualsTo1() throws Exception {
 
         //Given
-        String clientJson = "{\"name\": \"Joao\", \"email\": \"joao@teste.com\", \"dateOfBirth\": \"1990-01-01\", \"drivingLicense\": \"234234551\", \"nif\": \"234234235\"}";
+        String clientJson = "{\"name\": \"Joao\", \"email\": \"joao@teste.com\", \"drivingLicense\": \"234234551\", \"nif\": \"234234235\"}";
 
 
         //When
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/clients/")
+        MvcResult response = mockMvc.perform(post("/api/v1/clients/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(clientJson))
                 .andExpect(status().isCreated())
                 .andReturn();
 
         //Then
-        String responseContent = result.getResponse().getContentAsString();
-
-        Client client = objectMapper.readValue(responseContent, Client.class);
+        Client client = objectMapper.readValue(response.getResponse().getContentAsString(), Client.class);
 
         //assert student id and name using matchers
-        assertThat(client.getId()).isEqualTo(1L);
-        assertThat(client.getName()).isEqualTo("Joao");
-        assertThat(client.getEmail()).isEqualTo("joao@teste.com");
-
+        Assert.isTrue(client.getId() == 1, "Client id is not 1");
+        Assert.isTrue(client.getName().equals("Joao"), "Client name is not Joao");
+        Assert.isTrue(client.getEmail().equals("joao@teste.com"), "Email is not joao@teste.com");
+        Assert.isTrue(client.getNif() == 234234235, "Nif is not 234234235");
+        Assert.isTrue(client.getDrivingLicense() == 234234551, "Driving License is not 234234551");
 
     }
 
@@ -93,11 +93,11 @@ class RentacarApplicationTests {
         //Create 2 students
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/clients/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\": \"Joao\", \"email\": \"joao@teste.com\", \"dateOfBirth\": \"1990-01-01\", \"drivingLicense\": \"234234551\", \"nif\": \"234234235\"}"));
+                .content("{\"name\": \"Joao\", \"email\": \"joao@teste.com\", \"drivingLicense\": \"234234551\", \"nif\": \"234234235\"}"));
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/clients/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\": \"Maria\", \"email\": \"maria@teste.com\", \"dateOfBirth\": \"1990-01-02\", \"drivingLicense\": \"234234552\", \"nif\": \"234234234\"}"));
+                .content("{\"name\": \"Maria\", \"email\": \"maria@teste.com\", \"drivingLicense\": \"234234552\", \"nif\": \"234234234\"}"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/clients/"))
                 .andExpect(status().isOk())

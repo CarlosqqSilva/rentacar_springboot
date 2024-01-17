@@ -19,51 +19,55 @@ import java.util.Optional;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-    @Autowired
-    private ClientRepository clientsRepository;
+    private ClientRepository clientRepository;
     @Autowired
     private ClientMapper clientMapper;
 
+    @Autowired
+    public ClientServiceImpl(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
     @Override
     public List<ClientGetDto> getClients() {
-        return clientMapper.modelClientToGetClientDto(clientsRepository.findAll());
+        return clientMapper.modelClientToGetClientDto(clientRepository.findAll());
     }
 
     @Override
     public Client createClient(ClientCreateDto client) throws CreateClientException {
-        Optional<Client> clientOptional = clientsRepository.findClientByEmail(client.email());
+        Optional<Client> clientOptional = clientRepository.findClientByEmail(client.email());
         if (clientOptional.isPresent()) {
             throw new CreateClientException(Messages.EMAIL_IN_USE);
         }
-        if (clientsRepository.findByNif(client.nif()).isPresent()) {
+        if (clientRepository.findByNif(client.nif()).isPresent()) {
             throw new CreateClientException(Messages.EMAIL_IN_USE); //todo have to change messsage
         }
         Client newClient = clientMapper.clientDtoToModelClient(client);
-        return clientsRepository.save(newClient);
+        return clientRepository.save(newClient);
     }
 
     @Override
     public void updateClient(Long id, ClientUpdateDto clientDto) throws UpdateClientException {
-        Client clientToUpdate = clientsRepository.findById(id).orElseThrow(() -> new UpdateClientException(Messages.ID_DOES_NOT_EXIST));
-        if (clientsRepository.findByEmail(clientDto.email()).isEmpty()) { //todo FIX THE EMPTY TO PRESENT
+        Client clientToUpdate = clientRepository.findById(id).orElseThrow(() -> new UpdateClientException(Messages.ID_DOES_NOT_EXIST));
+        if (clientRepository.findByEmail(clientDto.email()).isEmpty()) { //todo FIX THE EMPTY TO PRESENT
             throw new UpdateClientException(Messages.EMAIL_IN_USE);
         }
         clientToUpdate.setEmail(clientDto.email());
         clientToUpdate.setName(clientDto.name());
-        clientsRepository.save(clientToUpdate);
+        clientRepository.save(clientToUpdate);
     }
 
     @Override
     public void deleteClient(Long id) throws DeleteClientException {
-        Client client = clientsRepository.getReferenceById(id);
+        Client client = clientRepository.getReferenceById(id);
         if (client == null) {
             throw new DeleteClientException(Messages.USER_NOT_FOUND);
         }
-        clientsRepository.delete(client);
+        clientRepository.delete(client);
     }
 
     public Client getById(Long id) throws GetClientByIdException {
-        Optional<Client> clientOptional = this.clientsRepository.findById(id);
+        Optional<Client> clientOptional = this.clientRepository.findById(id);
         if (clientOptional.isEmpty())
             throw new GetClientByIdException(Messages.ID_DOES_NOT_EXIST);
         return clientOptional.get();
