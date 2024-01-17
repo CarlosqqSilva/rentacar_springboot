@@ -12,7 +12,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,12 +40,8 @@ public class ClientController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> updateClient(@PathVariable Long id, @Valid @RequestBody ClientUpdateDto clientDto, BindingResult bindingResult) throws UpdateClientException {
-        if (bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().forEach(System.out::println);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        clientsService.updateClient(id, clientDto);
+    public ResponseEntity<String> update(@Valid @RequestBody ClientUpdateDto client, @PathVariable long id) throws UpdateClientException {
+        clientsService.updateClient(id, client);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -41,7 +41,7 @@ public class ClientServiceImpl implements ClientService {
             throw new CreateClientException(MessagesEnum.EMAIL_IN_USE.getMessage());
         }
         if (clientRepository.findByNif(client.nif()).isPresent()) {
-            throw new CreateClientException(Messages.EMAIL_IN_USE); //todo have to change messsage
+            throw new CreateClientException(Messages.NIF_ALREADY_IN_USE);
         }
         Client newClient = clientMapper.clientDtoToModelClient(client);
         return clientRepository.save(newClient);
@@ -50,7 +50,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void updateClient(Long id, ClientUpdateDto clientDto) throws UpdateClientException {
         Client clientToUpdate = clientRepository.findById(id).orElseThrow(() -> new UpdateClientException(Messages.ID_DOES_NOT_EXIST));
-        if (clientRepository.findByEmail(clientDto.email()).isEmpty()) { //todo FIX THE EMPTY TO PRESENT
+        if (clientRepository.findClientByEmail(clientDto.email()).isPresent()) {
             throw new UpdateClientException(Messages.EMAIL_IN_USE);
         }
         clientToUpdate.setEmail(clientDto.email());
