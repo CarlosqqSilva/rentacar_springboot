@@ -1,5 +1,6 @@
 package RentaCarExercise.springboot.converters;
 
+
 import RentaCarExercise.springboot.dto.clientDTO.ClientCreateDto;
 import RentaCarExercise.springboot.dto.clientDTO.ClientGetDto;
 import RentaCarExercise.springboot.dto.clientDTO.ClientUpdateDto;
@@ -40,6 +41,7 @@ public class ClientConverter {
                 client.getEmail()
         );
     }
+
 
     public static Client clientDtoToModelClient(ClientCreateDto clientCreateDto) {
         return new Client(
