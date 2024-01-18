@@ -1,6 +1,7 @@
 package RentaCarExercise.springboot.services.clientService;
 
 import RentaCarExercise.springboot.dto.clientDTO.ClientCreateDto;
+import RentaCarExercise.springboot.dto.clientDTO.ClientGetDto;
 import RentaCarExercise.springboot.dto.clientDTO.ClientUpdateDto;
 import RentaCarExercise.springboot.expections.clientExpections.CreateClientException;
 import RentaCarExercise.springboot.expections.clientExpections.DeleteClientException;
@@ -8,8 +9,10 @@ import RentaCarExercise.springboot.expections.clientExpections.GetClientByIdExce
 import RentaCarExercise.springboot.expections.clientExpections.UpdateClientException;
 import RentaCarExercise.springboot.model.Client;
 
+import java.util.List;
+
 public interface ClientService {
-    ClientCreateDto getClients();
+    List<ClientGetDto> getClients();
 
     Client createClient(ClientCreateDto client) throws CreateClientException;
 

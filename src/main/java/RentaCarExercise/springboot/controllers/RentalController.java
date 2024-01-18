@@ -1,6 +1,7 @@
 package RentaCarExercise.springboot.controllers;
 
 import RentaCarExercise.springboot.dto.rentalDTO.RentalCreateDto;
+import RentaCarExercise.springboot.dto.rentalDTO.RentalGetDto;
 import RentaCarExercise.springboot.dto.rentalDTO.RentalPostDto;
 import RentaCarExercise.springboot.expections.carExceptions.GetByIdException;
 import RentaCarExercise.springboot.expections.clientExpections.GetClientByIdException;
@@ -15,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/rentals")
 public class RentalController {
@@ -27,7 +30,7 @@ public class RentalController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<RentalCreateDto> getRentals() {
+    public ResponseEntity<List<RentalGetDto>> getRentals() {
         return ResponseEntity.ok(rentalsService.getRentals());
     }
 

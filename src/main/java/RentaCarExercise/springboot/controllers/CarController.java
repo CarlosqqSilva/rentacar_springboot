@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/cars")
 public class CarController {
@@ -28,7 +30,7 @@ public class CarController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<CarGetDto> getCars() {
+    public ResponseEntity<List<CarGetDto>> getCars() {
         return ResponseEntity.ok(carsService.getCars());
     }
 

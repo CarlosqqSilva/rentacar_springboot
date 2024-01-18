@@ -15,6 +15,7 @@ import RentaCarExercise.springboot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,8 +23,8 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarRepository carRepository;
 
-    public CarGetDto getCars() {
-        return CarConverter.modelCarToCarGetDto((Car) carRepository.findAll());
+    public List<CarGetDto> getCars() {
+        return CarConverter.fromClientModelListToGetDtoList(carRepository.findAll());
     }
 
     @Override

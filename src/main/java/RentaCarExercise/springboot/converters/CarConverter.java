@@ -6,6 +6,8 @@ import RentaCarExercise.springboot.dto.carDTO.CarUpdateKmDto;
 import RentaCarExercise.springboot.dto.carDTO.CarUpdatePriceDto;
 import RentaCarExercise.springboot.model.Car;
 
+import java.util.List;
+
 public class CarConverter {
 
     public static CarCreateDto modelCarToCarDto(Car car) {
@@ -16,6 +18,23 @@ public class CarConverter {
                 car.getHorsePower(),
                 car.getPricePerDay()
         );
+    }
+
+    public static CarGetDto modelCarToCarGetDto(Car car) {
+        return new CarGetDto(
+                car.getId(),
+                car.getBrand(),
+                car.getPlate(),
+                car.getKm(),
+                car.getPricePerDay(),
+                car.getHorsePower()
+        );
+    }
+
+    public static List<CarGetDto> fromClientModelListToGetDtoList(List<Car> cars) {
+        return cars.stream()
+                .map(CarConverter::modelCarToCarGetDto)
+                .toList();
     }
 
     public static CarUpdateKmDto modelCarUpdateKmToDto(Car car) {
@@ -37,17 +56,6 @@ public class CarConverter {
                 carCreateDto.km(),
                 carCreateDto.horsePower(),
                 carCreateDto.pricePerDay()
-        );
-    }
-
-    public static CarGetDto modelCarToCarGetDto(Car car) {
-        return new CarGetDto(
-                car.getId(),
-                car.getBrand(),
-                car.getPlate(),
-                car.getKm(),
-                car.getPricePerDay(),
-                car.getHorsePower()
         );
     }
 }

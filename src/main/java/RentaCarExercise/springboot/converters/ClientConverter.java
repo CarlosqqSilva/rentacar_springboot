@@ -1,8 +1,11 @@
 package RentaCarExercise.springboot.converters;
 
 import RentaCarExercise.springboot.dto.clientDTO.ClientCreateDto;
+import RentaCarExercise.springboot.dto.clientDTO.ClientGetDto;
 import RentaCarExercise.springboot.dto.clientDTO.ClientUpdateDto;
 import RentaCarExercise.springboot.model.Client;
+
+import java.util.List;
 
 public class ClientConverter {
 
@@ -14,6 +17,21 @@ public class ClientConverter {
                 client.getDrivingLicense(),
                 client.getNif()
         );
+    }
+
+    public static ClientGetDto fromClientModelToGetDto(Client client) {
+        return new ClientGetDto(
+                client.getName(),
+                client.getEmail(),
+                client.getNif(),
+                client.getDrivingLicense()
+        );
+    }
+
+    public static List<ClientGetDto> fromClientModelListToGetDtoList(List<Client> clients) {
+        return clients.stream()
+                .map(ClientConverter::fromClientModelToGetDto)
+                .toList();
     }
 
     public static ClientUpdateDto modelClientUpdateToDto(Client client) {
@@ -31,5 +49,4 @@ public class ClientConverter {
                 clientCreateDto.nif()
         );
     }
-
 }

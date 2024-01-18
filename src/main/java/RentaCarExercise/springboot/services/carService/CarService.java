@@ -10,8 +10,10 @@ import RentaCarExercise.springboot.expections.carExceptions.GetByIdException;
 import RentaCarExercise.springboot.expections.carExceptions.UpdateCarException;
 import RentaCarExercise.springboot.model.Car;
 
+import java.util.List;
+
 public interface CarService {
-    CarGetDto getCars();
+    List<CarGetDto> getCars();
 
     Car addCar(CarCreateDto car) throws AddCarException;
 

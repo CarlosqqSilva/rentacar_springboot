@@ -2,6 +2,7 @@ package RentaCarExercise.springboot.services.clientService;
 
 import RentaCarExercise.springboot.converters.ClientConverter;
 import RentaCarExercise.springboot.dto.clientDTO.ClientCreateDto;
+import RentaCarExercise.springboot.dto.clientDTO.ClientGetDto;
 import RentaCarExercise.springboot.dto.clientDTO.ClientUpdateDto;
 import RentaCarExercise.springboot.expections.clientExpections.CreateClientException;
 import RentaCarExercise.springboot.expections.clientExpections.DeleteClientException;
@@ -14,6 +15,7 @@ import RentaCarExercise.springboot.util.MessagesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,9 +27,9 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository = clientRepository;
     }
 
-    @Override
-    public ClientCreateDto getClients() {
-        return ClientConverter.modelClientToClientDto((Client) clientRepository.findAll());
+
+    public List<ClientGetDto> getClients() {
+        return ClientConverter.fromClientModelListToGetDtoList(clientRepository.findAll());
     }
 
     @Override

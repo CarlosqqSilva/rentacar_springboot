@@ -1,8 +1,11 @@
 package RentaCarExercise.springboot.converters;
 
 import RentaCarExercise.springboot.dto.rentalDTO.RentalCreateDto;
+import RentaCarExercise.springboot.dto.rentalDTO.RentalGetDto;
 import RentaCarExercise.springboot.dto.rentalDTO.RentalPostDto;
 import RentaCarExercise.springboot.model.Rental;
+
+import java.util.List;
 
 public class RentalConverter {
 
@@ -14,6 +17,22 @@ public class RentalConverter {
                 rental.getEndOfRental(),
                 rental.getId()
         );
+    }
+
+    public static RentalGetDto modelRentalToRentalGetDto(Rental rental) {
+        return new RentalGetDto(
+                rental.getId(),
+                rental.getClient().getId(),
+                rental.getCar().getId(),
+                rental.getDateOfRental(),
+                rental.getEndOfRental()
+        );
+    }
+
+    public static List<RentalGetDto> fromClientModelListToGetDtoList(List<Rental> rentals) {
+        return rentals.stream()
+                .map(RentalConverter::modelRentalToRentalGetDto)
+                .toList();
     }
 
     public static RentalPostDto modelRentalToRentalPostDto(Rental rental) {

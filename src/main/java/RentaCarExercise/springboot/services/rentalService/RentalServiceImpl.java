@@ -2,6 +2,7 @@ package RentaCarExercise.springboot.services.rentalService;
 
 import RentaCarExercise.springboot.converters.RentalConverter;
 import RentaCarExercise.springboot.dto.rentalDTO.RentalCreateDto;
+import RentaCarExercise.springboot.dto.rentalDTO.RentalGetDto;
 import RentaCarExercise.springboot.dto.rentalDTO.RentalPostDto;
 import RentaCarExercise.springboot.expections.carExceptions.GetByIdException;
 import RentaCarExercise.springboot.expections.clientExpections.GetClientByIdException;
@@ -17,6 +18,7 @@ import RentaCarExercise.springboot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,8 +37,8 @@ public class RentalServiceImpl implements RentalService {
     }
 
 
-    public RentalCreateDto getRentals() {
-        return RentalConverter.modelRentalToRentalDto((Rental) rentalRepository.findAll());
+    public List<RentalGetDto> getRentals() {
+        return RentalConverter.fromClientModelListToGetDtoList(rentalRepository.findAll());
     }
 
     @Override
