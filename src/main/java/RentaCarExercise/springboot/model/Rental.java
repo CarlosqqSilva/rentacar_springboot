@@ -38,4 +38,7 @@ public class Rental {
         this.endOfRental = endOfRental;
         this.dateOfRental = LocalDate.now();
     }
+
+    public Rental(Long ClientID, Long CarID, LocalDate endOfRental) {
+    }
 }

@@ -1,13 +1,12 @@
 package RentaCarExercise.springboot.services.clientService;
 
+import RentaCarExercise.springboot.converters.ClientConverter;
 import RentaCarExercise.springboot.dto.clientDTO.ClientCreateDto;
-import RentaCarExercise.springboot.dto.clientDTO.ClientGetDto;
 import RentaCarExercise.springboot.dto.clientDTO.ClientUpdateDto;
 import RentaCarExercise.springboot.expections.clientExpections.CreateClientException;
 import RentaCarExercise.springboot.expections.clientExpections.DeleteClientException;
 import RentaCarExercise.springboot.expections.clientExpections.GetClientByIdException;
 import RentaCarExercise.springboot.expections.clientExpections.UpdateClientException;
-import RentaCarExercise.springboot.mapper.ClientMapper;
 import RentaCarExercise.springboot.model.Client;
 import RentaCarExercise.springboot.repositories.ClientRepository;
 import RentaCarExercise.springboot.util.Messages;
@@ -15,14 +14,11 @@ import RentaCarExercise.springboot.util.MessagesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-    private ClientRepository clientRepository;
-    @Autowired
-    private ClientMapper clientMapper;
+    private final ClientRepository clientRepository;
 
     @Autowired
     public ClientServiceImpl(ClientRepository clientRepository) {
@@ -30,8 +26,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<ClientGetDto> getClients() {
-        return clientMapper.modelClientToGetClientDto(clientRepository.findAll());
+    public ClientCreateDto getClients() {
+        return ClientConverter.modelClientToClientDto((Client) clientRepository.findAll());
     }
 
     @Override
@@ -43,7 +39,7 @@ public class ClientServiceImpl implements ClientService {
         if (clientRepository.findByNif(client.nif()).isPresent()) {
             throw new CreateClientException(Messages.NIF_ALREADY_IN_USE);
         }
-        Client newClient = clientMapper.clientDtoToModelClient(client);
+        Client newClient = ClientConverter.clientDtoToModelClient(client);
         return clientRepository.save(newClient);
     }
 

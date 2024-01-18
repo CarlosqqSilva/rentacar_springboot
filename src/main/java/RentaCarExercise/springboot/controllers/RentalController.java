@@ -15,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("api/v1/rentals")
 public class RentalController {
@@ -29,7 +27,7 @@ public class RentalController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<RentalCreateDto>> getRentals() {
+    public ResponseEntity<RentalCreateDto> getRentals() {
         return ResponseEntity.ok(rentalsService.getRentals());
     }
 

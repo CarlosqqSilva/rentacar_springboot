@@ -7,10 +7,8 @@ import RentaCarExercise.springboot.expections.clientExpections.GetClientByIdExce
 import RentaCarExercise.springboot.expections.rentalExpections.DeleteRentalException;
 import RentaCarExercise.springboot.expections.rentalExpections.UpdateRentalException;
 
-import java.util.List;
-
 public interface RentalService {
-    List<RentalCreateDto> getRentals();
+    RentalCreateDto getRentals();
 
     void addNewRental(RentalPostDto rental) throws GetByIdException, GetClientByIdException;
 

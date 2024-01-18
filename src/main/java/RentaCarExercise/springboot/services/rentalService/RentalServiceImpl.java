@@ -1,12 +1,12 @@
 package RentaCarExercise.springboot.services.rentalService;
 
+import RentaCarExercise.springboot.converters.RentalConverter;
 import RentaCarExercise.springboot.dto.rentalDTO.RentalCreateDto;
 import RentaCarExercise.springboot.dto.rentalDTO.RentalPostDto;
 import RentaCarExercise.springboot.expections.carExceptions.GetByIdException;
 import RentaCarExercise.springboot.expections.clientExpections.GetClientByIdException;
 import RentaCarExercise.springboot.expections.rentalExpections.DeleteRentalException;
 import RentaCarExercise.springboot.expections.rentalExpections.UpdateRentalException;
-import RentaCarExercise.springboot.mapper.RentalMapper;
 import RentaCarExercise.springboot.model.Car;
 import RentaCarExercise.springboot.model.Client;
 import RentaCarExercise.springboot.model.Rental;
@@ -17,8 +17,6 @@ import RentaCarExercise.springboot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,8 +25,6 @@ public class RentalServiceImpl implements RentalService {
     private final RentalRepository rentalRepository;
     private final ClientService clientService;
     private final CarService carService;
-    @Autowired
-    private RentalMapper rentalMapper;
 
     @Autowired
     public RentalServiceImpl(RentalRepository rentalsRepository, ClientService clientService, CarService carService) {
@@ -38,10 +34,9 @@ public class RentalServiceImpl implements RentalService {
         this.carService = carService;
     }
 
-    public List<RentalCreateDto> getRentals() {
-        List<Rental> rentals = new ArrayList<>();
-        rentals.addAll(rentalRepository.findAll());
-        return rentalMapper.modelRentalToRentalDto(rentals);
+
+    public RentalCreateDto getRentals() {
+        return RentalConverter.modelRentalToRentalDto((Rental) rentalRepository.findAll());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package RentaCarExercise.springboot.controllers;
 
 import RentaCarExercise.springboot.dto.carDTO.CarCreateDto;
+import RentaCarExercise.springboot.dto.carDTO.CarGetDto;
 import RentaCarExercise.springboot.dto.carDTO.CarUpdateKmDto;
 import RentaCarExercise.springboot.dto.carDTO.CarUpdatePriceDto;
 import RentaCarExercise.springboot.expections.carExceptions.AddCarException;
@@ -15,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("api/v1/cars")
 public class CarController {
@@ -29,7 +28,7 @@ public class CarController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<CarCreateDto>> getCars() {
+    public ResponseEntity<CarGetDto> getCars() {
         return ResponseEntity.ok(carsService.getCars());
     }
 
